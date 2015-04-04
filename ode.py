@@ -17,7 +17,7 @@ def odesolve_adams(f, y0, sequence, tol=1e-3):
     return y
 
 
-def odesolve(f, y0, sequence, tolerance=1e-2):
+def odesolve(f, y0, sequence, tolerance=1e-3):
     sequence = np.append([], sequence)
     t = t0 = sequence[0]
     y = np.array(y0)

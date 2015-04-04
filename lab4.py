@@ -4,7 +4,7 @@ from ode import *
 import matplotlib.pyplot as plt
 
 f = lambda y, x: x**2 - y
-x = np.linspace(0, 5.)
+x = np.linspace(0, 5., 50)
 y_adm = odesolve_adams(f, 2., x)
 y_rk = odesolve(f, 2., x)
 y_analytic = lambda x: x ** 2 - 2 * x + 2
