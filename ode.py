@@ -6,13 +6,12 @@ import numpy as np
 def odesolve_adams(f, y0, sequence, tol=1e-3):
     y = odesolve(f, y0, sequence[:4], tol)
     h = sequence[1] - sequence[0]
-    predict_y = lambda y, x: y + h / 24. * (
-    55 * f(y, x) - 59 * f(y, x - h) + 37 * f(y, x - 2 * h) + 9 * f(y, x - 3 * h))
+    predict_y = lambda y, x: y + h / 24. * \
+                                 (55 * f(y, x) - 59 * f(y, x - h) + 37 * f(y, x - 2 * h) + 9 * f(y, x - 3 * h))
     correct_y = lambda y, x: y + h / 24. * (9 * f(y, x) - 19 * f(y, x - h) - 5 * f(y, x - 2 * h) + f(y, x - 3 * h))
 
     for x in sequence[4:]:
         y = np.append(y, predict_y(y[-1], x))
-        # while np.greater(np.abs(correct_y(y[-1], x) - y[-1]), tol).any():
         y[-1] = correct_y(y[-1], x)
 
     return y
