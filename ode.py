@@ -26,10 +26,10 @@ def odesolve(f, y0, sequence, tolerance=1e-2):
     steps = 0
 
     k1 = lambda: f(y, t)
-    k2 = lambda dx: f(y + k1() * dx / 2., t + dx / 2.)
-    k3 = lambda dx: f(y + k2(dx) * dx / 2., t + dx / 2.)
-    k4 = lambda dt: f(y + k3(dt) * dt, t + dt)
-    next_y = lambda dt: y + dt / 6. * (k1() + 2 * k2(dt) + 2 * k3(dt) + k4(dt))
+    k2 = lambda dt: f(y + k1() * dt / 3., t + dt / 3.)
+    k3 = lambda dt: f(y + (-k1() / 3. + k2(dt)) * dt, t + dt * 2 / 3.)
+    k4 = lambda dt: f(y + (k1() - k2(dt) + k3(dt)) * dt, t + dt)
+    next_y = lambda dt: y + dt / 8. * (k1() + 3 * k2(dt) + 3 * k3(dt) + k4(dt))
     rest = lambda dt: np.abs(np.array(next_y(dt) - next_y(dt / 2.))) / 15.
 
     for end in sequence[1:]:
